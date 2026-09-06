@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {Worker} from 'node:worker_threads';
+import {once} from 'node:events';
+import {createExample,History,clone,assertModel,validateModel} from '../src/model.js';
+import {analyze,sweep,optimize,traceBatch,prepare} from '../src/optics.js';
+import {parseQuantity,csv,ProjectStore} from '../src/project.js';
+
+test('Quantity parser converts dimensions without evaluating code',()=>{assert.equal(parseQuantity('7 cm','radius'),70);assert.equal(parseQuantity('0.49 um','wavelength'),490);assert.equal(parseQuantity('∞','radius'),0);assert.equal(parseQuantity('250 µm'),.25);assert.throws(()=>parseQuantity('1 + 2'));assert.throws(()=>parseQuantity('20 nm','angle'));assert.equal(parseQuantity('1e-6 mm^-3','a4'),1e-6);});
+test('CSV escaping protects labels from spreadsheet formula injection',()=>{assert.equal(csv([['a,b','"text"',-2,'=1+1']]),'"a,b","""text""",-2,\'=1+1');});
+test('Malformed project arrays return validation errors',()=>{for(const part of [{surfaces:[null,null]},{customGlasses:[null]},{optimization:{variables:[null],operands:[null],iterations:2}},{wavelengths:[null]}])assert.ok(validateModel({...createExample(),...part}).errors.length);});
+test('Invalid transaction leaves history unchanged',()=>{const h=new History(createExample()),before=JSON.stringify(h.current),bad=clone(h.current);bad.surfaces[1].id=bad.surfaces[0].id;assert.throws(()=>h.commit(bad));assert.equal(JSON.stringify(h.current),before);assert.equal(h.revision,0);});
+test('Circular pupil cannot silently become elliptical',()=>{const m=createExample();m.surfaces[0].semiY=8;assert.throws(()=>assertModel(m),/equal semi/);});
+test('Custom glass project roundtrip preserves calculated optics',()=>{const m=createExample('singlet');m.customGlasses.push({name:'CROWN-TEST',model:'cauchy',min:.4,max:1,A:1.5,B:.004,C:0});m.surfaces[1].glass='CROWN-TEST';assertModel(m);const n=JSON.parse(JSON.stringify(m));assert.equal(analyze(m,{samples:32}).rms,analyze(n,{samples:32}).rms);});
+test('Annular pupil retains an unclipped mathematical chief reference',()=>{const m=createExample('singlet');m.surfaces[0].inner=3;const r=analyze(m,{samples:64});assert.equal(r.valid,r.total);assert.ok(Number.isFinite(r.fields[0].wavefront[1].pv));const p=prepare(m,{samples:16,includeFans:false}),raw=traceBatch(p);assert.equal(raw[7],0);});
+test('All-vignetted system reports no RMS, not zero RMS',()=>{const m=createExample('singlet');m.surfaces.at(-1).semi=m.surfaces.at(-1).semiY=1e-6;const r=analyze(m,{samples:64});assert.equal(r.valid,0);assert.equal(r.rms,null);assert.equal(r.fields[0].rms,null);});
+test('Cancellation stops optimization without changing the input',async()=>{const m=createExample(),before=JSON.stringify(m),r=await optimize(m,{cancelled:()=>true});assert.equal(r.reason,'Cancelled');assert.equal(JSON.stringify(m),before);});
+test('Parameter sweep reports errors and real nonconstant results',async()=>{const m=createExample('singlet'),r=await sweep(m,{id:'front',param:'radius',start:1,end:60,steps:4});assert.equal(r.rows.length,4);assert.ok(r.rows[0].error);assert.ok(r.rows[3].rms>0);assert.notEqual(r.rows[2].efl,r.rows[3].efl);});
+test('Memory-only persistence keeps independent recovery snapshots',async()=>{const s=new ProjectStore();await s.open();assert.equal(s.mode,'memory');const m=createExample();await s.save(m);m.name='Edited';await s.save(m);assert.equal((await s.load()).name,'Edited');assert.notEqual((await s.recovery()).name,'Edited');});
+test('Actual worker-thread protocol computes reproducible optics',async()=>{const w=new Worker(new URL('./worker-harness.mjs',import.meta.url));try{await once(w,'message');const model=createExample('singlet'),answer=once(w,'message');w.postMessage({id:1,type:'analyze',payload:{model,options:{samples:32,includePaths:false,includeFans:false}}});const [data]=await answer;assert.equal(data.id,1);assert.ok(!data.error);assert.equal(data.result.rms,analyze(model,{samples:32,includePaths:false,includeFans:false}).rms);}finally{await w.terminate();}});

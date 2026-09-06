@@ -1,0 +1,20 @@
+{
+  "name": "aether-optics",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Sequential optical design workbench with a Float64 reference kernel and WebGPU ray tracing.",
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "build": "node tools/build.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wieslawsoltes/AetherOptics.git"
+  },
+  "homepage": "https://wieslawsoltes.github.io/AetherOptics/"
+}

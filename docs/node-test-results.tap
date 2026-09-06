@@ -1,0 +1,254 @@
+
+> aether-optics@1.0.0 test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: Quantity parser converts dimensions without evaluating code
+ok 1 - Quantity parser converts dimensions without evaluating code
+  ---
+  duration_ms: 4.145755
+  type: 'test'
+  ...
+# Subtest: CSV escaping protects labels from spreadsheet formula injection
+ok 2 - CSV escaping protects labels from spreadsheet formula injection
+  ---
+  duration_ms: 0.523202
+  type: 'test'
+  ...
+# Subtest: Malformed project arrays return validation errors
+ok 3 - Malformed project arrays return validation errors
+  ---
+  duration_ms: 14.38237
+  type: 'test'
+  ...
+# Subtest: Invalid transaction leaves history unchanged
+ok 4 - Invalid transaction leaves history unchanged
+  ---
+  duration_ms: 1.720838
+  type: 'test'
+  ...
+# Subtest: Circular pupil cannot silently become elliptical
+ok 5 - Circular pupil cannot silently become elliptical
+  ---
+  duration_ms: 0.657763
+  type: 'test'
+  ...
+# Subtest: Custom glass project roundtrip preserves calculated optics
+ok 6 - Custom glass project roundtrip preserves calculated optics
+  ---
+  duration_ms: 160.957671
+  type: 'test'
+  ...
+# Subtest: Annular pupil retains an unclipped mathematical chief reference
+ok 7 - Annular pupil retains an unclipped mathematical chief reference
+  ---
+  duration_ms: 35.024952
+  type: 'test'
+  ...
+# Subtest: All-vignetted system reports no RMS, not zero RMS
+ok 8 - All-vignetted system reports no RMS, not zero RMS
+  ---
+  duration_ms: 28.855844
+  type: 'test'
+  ...
+# Subtest: Cancellation stops optimization without changing the input
+ok 9 - Cancellation stops optimization without changing the input
+  ---
+  duration_ms: 21.09385
+  type: 'test'
+  ...
+# Subtest: Parameter sweep reports errors and real nonconstant results
+ok 10 - Parameter sweep reports errors and real nonconstant results
+  ---
+  duration_ms: 162.298866
+  type: 'test'
+  ...
+# Subtest: Memory-only persistence keeps independent recovery snapshots
+ok 11 - Memory-only persistence keeps independent recovery snapshots
+  ---
+  duration_ms: 1.204158
+  type: 'test'
+  ...
+# Subtest: Actual worker-thread protocol computes reproducible optics
+ok 12 - Actual worker-thread protocol computes reproducible optics
+  ---
+  duration_ms: 149.26501
+  type: 'test'
+  ...
+# Subtest: SCHOTT N-BK7 d-line
+ok 13 - SCHOTT N-BK7 d-line
+  ---
+  duration_ms: 8.818754
+  type: 'test'
+  ...
+# Subtest: SCHOTT F2 d-line
+ok 14 - SCHOTT F2 d-line
+  ---
+  duration_ms: 0.569338
+  type: 'test'
+  ...
+# Subtest: SCHOTT N-SF11 d-line
+ok 15 - SCHOTT N-SF11 d-line
+  ---
+  duration_ms: 0.452141
+  type: 'test'
+  ...
+# Subtest: Cauchy dispersion
+ok 16 - Cauchy dispersion
+  ---
+  duration_ms: 0.234511
+  type: 'test'
+  ...
+# Subtest: Snell law · 30° air / n=1.5
+ok 17 - Snell law · 30° air / n=1.5
+  ---
+  duration_ms: 0.533433
+  type: 'test'
+  ...
+# Subtest: Normal incidence preserves direction
+ok 18 - Normal incidence preserves direction
+  ---
+  duration_ms: 0.221678
+  type: 'test'
+  ...
+# Subtest: Total internal reflection · glass / air
+ok 19 - Total internal reflection · glass / air
+  ---
+  duration_ms: 0.45447
+  type: 'test'
+  ...
+# Subtest: Specular reflection
+ok 20 - Specular reflection
+  ---
+  duration_ms: 0.213361
+  type: 'test'
+  ...
+# Subtest: Refraction reciprocity
+ok 21 - Refraction reciprocity
+  ---
+  duration_ms: 0.826357
+  type: 'test'
+  ...
+# Subtest: Positive-radius spherical cap branch
+ok 22 - Positive-radius spherical cap branch
+  ---
+  duration_ms: 10.408082
+  type: 'test'
+  ...
+# Subtest: Negative-radius spherical cap branch
+ok 23 - Negative-radius spherical cap branch
+  ---
+  duration_ms: 0.758807
+  type: 'test'
+  ...
+# Subtest: Plane-parallel plate angular invariance
+ok 24 - Plane-parallel plate angular invariance
+  ---
+  duration_ms: 1.600358
+  type: 'test'
+  ...
+# Subtest: Optical path through a normal plate
+ok 25 - Optical path through a normal plate
+  ---
+  duration_ms: 0.70944
+  type: 'test'
+  ...
+# Subtest: Circular aperture clipping
+ok 26 - Circular aperture clipping
+  ---
+  duration_ms: 0.560366
+  type: 'test'
+  ...
+# Subtest: Annular aperture central obscuration
+ok 27 - Annular aperture central obscuration
+  ---
+  duration_ms: 0.703266
+  type: 'test'
+  ...
+# Subtest: Rectangle aperture corner
+ok 28 - Rectangle aperture corner
+  ---
+  duration_ms: 2.82351
+  type: 'test'
+  ...
+# Subtest: Even-asphere analytic slope
+ok 29 - Even-asphere analytic slope
+  ---
+  duration_ms: 0.526967
+  type: 'test'
+  ...
+# Subtest: Polynomial asphere intersection residual
+ok 30 - Polynomial asphere intersection residual
+  ---
+  duration_ms: 0.624589
+  type: 'test'
+  ...
+# Subtest: Thin-lens limit · n=1.5 / R=50
+ok 31 - Thin-lens limit · n=1.5 / R=50
+  ---
+  duration_ms: 1.055877
+  type: 'test'
+  ...
+# Subtest: Thick-lens lensmaker equation
+ok 32 - Thick-lens lensmaker equation
+  ---
+  duration_ms: 0.386517
+  type: 'test'
+  ...
+# Subtest: Paraboloid · exact 100 mm focus
+ok 33 - Paraboloid · exact 100 mm focus
+  ---
+  duration_ms: 49.029762
+  type: 'test'
+  ...
+# Subtest: Paraboloid · equal optical paths
+ok 34 - Paraboloid · equal optical paths
+  ---
+  duration_ms: 15.846932
+  type: 'test'
+  ...
+# Subtest: Internal-stop Newton ray aiming
+ok 35 - Internal-stop Newton ray aiming
+  ---
+  duration_ms: 0.889073
+  type: 'test'
+  ...
+# Subtest: Least-squares focus lowers spot RMS
+ok 36 - Least-squares focus lowers spot RMS
+  ---
+  duration_ms: 127.854984
+  type: 'test'
+  ...
+# Subtest: Project validation rejects a non-real cap
+ok 37 - Project validation rejects a non-real cap
+  ---
+  duration_ms: 0.479815
+  type: 'test'
+  ...
+# Subtest: Transactional undo / redo
+ok 38 - Transactional undo / redo
+  ---
+  duration_ms: 1.383723
+  type: 'test'
+  ...
+# Subtest: Deterministic sampling / merit
+ok 39 - Deterministic sampling / merit
+  ---
+  duration_ms: 28.977456
+  type: 'test'
+  ...
+# Subtest: Bounded LM improves defocus
+ok 40 - Bounded LM improves defocus
+  ---
+  duration_ms: 104.979944
+  type: 'test'
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 841.791636

@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "name": "Vega · spherical singlet",
+  "description": "Biconvex N-BK7 singlet; a deliberately simple design for exploring spherical and chromatic aberration.",
+  "units": "mm",
+  "wavelengths": [
+    {
+      "um": 0.4861327,
+      "weight": 1
+    },
+    {
+      "um": 0.5875618,
+      "weight": 1
+    },
+    {
+      "um": 0.6562725,
+      "weight": 1
+    }
+  ],
+  "primary": 1,
+  "fields": [
+    {
+      "x": 0,
+      "y": 0,
+      "weight": 1
+    },
+    {
+      "x": 0,
+      "y": 1.5,
+      "weight": 1
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "weight": 1
+    }
+  ],
+  "samples": 512,
+  "customGlasses": [],
+  "surfaces": [
+    {
+      "id": "stop",
+      "label": "Aperture stop",
+      "type": "standard",
+      "mode": "refract",
+      "radius": 0,
+      "thickness": 4,
+      "glass": "AIR",
+      "semi": 9,
+      "semiY": 9,
+      "inner": 0,
+      "aperture": "circle",
+      "conic": 0,
+      "a4": 0,
+      "a6": 0,
+      "a8": 0,
+      "a10": 0
+    },
+    {
+      "id": "front",
+      "label": "Crown · front",
+      "type": "standard",
+      "mode": "refract",
+      "radius": 55,
+      "thickness": 5,
+      "glass": "N-BK7",
+      "semi": 12.5,
+      "semiY": 12.5,
+      "inner": 0,
+      "aperture": "circle",
+      "conic": 0,
+      "a4": 0,
+      "a6": 0,
+      "a8": 0,
+      "a10": 0
+    },
+    {
+      "id": "rear",
+      "label": "Crown · rear",
+      "type": "standard",
+      "mode": "refract",
+      "radius": -55,
+      "thickness": 50.600021690196556,
+      "glass": "AIR",
+      "semi": 12.5,
+      "semiY": 12.5,
+      "inner": 0,
+      "aperture": "circle",
+      "conic": 0,
+      "a4": 0,
+      "a6": 0,
+      "a8": 0,
+      "a10": 0
+    },
+    {
+      "id": "image",
+      "label": "Image plane",
+      "type": "standard",
+      "mode": "image",
+      "radius": 0,
+      "thickness": 0,
+      "glass": "AIR",
+      "semi": 15,
+      "semiY": 15,
+      "inner": 0,
+      "aperture": "circle",
+      "conic": 0,
+      "a4": 0,
+      "a6": 0,
+      "a8": 0,
+      "a10": 0
+    }
+  ],
+  "stopId": "stop",
+  "optimization": {
+    "iterations": 35,
+    "variables": [
+      {
+        "id": "rear",
+        "param": "thickness",
+        "min": 5,
+        "max": 250,
+        "scale": 5
+      }
+    ],
+    "operands": [
+      {
+        "type": "RMS",
+        "target": 0,
+        "tolerance": 0.01,
+        "weight": 1
+      },
+      {
+        "type": "EFL",
+        "target": 54,
+        "tolerance": 1,
+        "weight": 2
+      }
+    ]
+  }
+}

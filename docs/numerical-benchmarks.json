@@ -1,0 +1,248 @@
+{
+  "rows": [
+    {
+      "name": "SCHOTT N-BK7 d-line",
+      "passed": true,
+      "ms": 0.08917599999995218,
+      "actual": 1.5168000345005885,
+      "expected": 1.5168,
+      "tolerance": 0.000005,
+      "error": 3.450058860821059e-8
+    },
+    {
+      "name": "SCHOTT F2 d-line",
+      "passed": true,
+      "ms": 0.03632000000004609,
+      "actual": 1.6200401372462678,
+      "expected": 1.62004,
+      "tolerance": 0.000005,
+      "error": 1.372462679061215e-7
+    },
+    {
+      "name": "SCHOTT N-SF11 d-line",
+      "passed": true,
+      "ms": 0.014471000000071399,
+      "actual": 1.78471994231005,
+      "expected": 1.78472,
+      "tolerance": 0.000005,
+      "error": 5.768995015031919e-8
+    },
+    {
+      "name": "Cauchy dispersion",
+      "passed": true,
+      "ms": 0.028661999999940235,
+      "actual": 1.5176,
+      "expected": 1.5176,
+      "tolerance": 1e-12,
+      "error": 0
+    },
+    {
+      "name": "Snell law · 30° air / n=1.5",
+      "passed": true,
+      "ms": 0.03163099999994756,
+      "actual": 19.471220634490695,
+      "expected": 19.47122063449069,
+      "tolerance": 1e-10,
+      "error": 3.552713678800501e-15
+    },
+    {
+      "name": "Normal incidence preserves direction",
+      "passed": true,
+      "ms": 0.015491999999994732,
+      "actual": 1,
+      "expected": 1,
+      "tolerance": 1e-14,
+      "error": 0
+    },
+    {
+      "name": "Total internal reflection · glass / air",
+      "passed": true,
+      "ms": 0.024116999999932887,
+      "actual": "TIR",
+      "expected": "TIR"
+    },
+    {
+      "name": "Specular reflection",
+      "passed": true,
+      "ms": 0.0412900000000036,
+      "actual": -0.7071067811865475,
+      "expected": -0.7071067811865476,
+      "tolerance": 1e-14,
+      "error": 1.1102230246251565e-16
+    },
+    {
+      "name": "Refraction reciprocity",
+      "passed": true,
+      "ms": 0.04960100000005241,
+      "actual": 1.2719202621569003e-16,
+      "expected": 0,
+      "tolerance": 2e-14,
+      "error": 1.2719202621569003e-16
+    },
+    {
+      "name": "Positive-radius spherical cap branch",
+      "passed": true,
+      "ms": 0.241800000000012,
+      "actual": 1.0102051443364424,
+      "expected": 1.0102051443364388,
+      "tolerance": 1e-10,
+      "error": 3.552713678800501e-15
+    },
+    {
+      "name": "Negative-radius spherical cap branch",
+      "passed": true,
+      "ms": 0.2363950000000159,
+      "actual": -1.0102051443364353,
+      "expected": -1.0102051443364388,
+      "tolerance": 1e-10,
+      "error": 3.552713678800501e-15
+    },
+    {
+      "name": "Plane-parallel plate angular invariance",
+      "passed": true,
+      "ms": 0.19427799999994022,
+      "actual": 3.1401849173675503e-16,
+      "expected": 0,
+      "tolerance": 1e-13,
+      "error": 3.1401849173675503e-16
+    },
+    {
+      "name": "Optical path through a normal plate",
+      "passed": true,
+      "ms": 0.10480399999994461,
+      "actual": 42,
+      "expected": 42,
+      "tolerance": 1e-12,
+      "error": 0
+    },
+    {
+      "name": "Circular aperture clipping",
+      "passed": true,
+      "ms": 0.15920199999993656,
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "name": "Annular aperture central obscuration",
+      "passed": true,
+      "ms": 0.11764399999992747,
+      "actual": 2,
+      "expected": 2
+    },
+    {
+      "name": "Rectangle aperture corner",
+      "passed": true,
+      "ms": 0.13262799999995423,
+      "actual": 0,
+      "expected": 0
+    },
+    {
+      "name": "Even-asphere analytic slope",
+      "passed": true,
+      "ms": 0.11313699999993787,
+      "actual": 0.058050746181818186,
+      "expected": 0.05805074618177308,
+      "tolerance": 1e-10,
+      "error": 4.5102810375396984e-14
+    },
+    {
+      "name": "Polynomial asphere intersection residual",
+      "passed": true,
+      "ms": 0.10995100000002367,
+      "actual": 3.9238057247814595e-13,
+      "expected": 0,
+      "tolerance": 3e-9,
+      "error": 3.9238057247814595e-13
+    },
+    {
+      "name": "Thin-lens limit · n=1.5 / R=50",
+      "passed": true,
+      "ms": 0.11731700000007095,
+      "actual": 50.00000166636671,
+      "expected": 50,
+      "tolerance": 0.00001,
+      "error": 0.0000016663667068428367
+    },
+    {
+      "name": "Thick-lens lensmaker equation",
+      "passed": true,
+      "ms": 0.096740000000068,
+      "actual": 54.04913789252398,
+      "expected": 54.049137892789666,
+      "tolerance": 1e-7,
+      "error": 2.6568613975541666e-10
+    },
+    {
+      "name": "Paraboloid · exact 100 mm focus",
+      "passed": true,
+      "ms": 8.772430999999983,
+      "actual": 2.691342296352688e-15,
+      "expected": 0,
+      "tolerance": 1e-10,
+      "error": 2.691342296352688e-15
+    },
+    {
+      "name": "Paraboloid · equal optical paths",
+      "passed": true,
+      "ms": 3.135756000000015,
+      "actual": 0,
+      "expected": 0,
+      "tolerance": 1e-7,
+      "error": 0
+    },
+    {
+      "name": "Internal-stop Newton ray aiming",
+      "passed": true,
+      "ms": 0.7265640000000531,
+      "actual": 2.0923436435394134e-13,
+      "expected": 0,
+      "tolerance": 1e-7,
+      "error": 2.0923436435394134e-13
+    },
+    {
+      "name": "Least-squares focus lowers spot RMS",
+      "passed": true,
+      "ms": 44.08155600000009,
+      "actual": 0.08383534262124338,
+      "expected": "< 0.34343086946528645 mm"
+    },
+    {
+      "name": "Project validation rejects a non-real cap",
+      "passed": true,
+      "ms": 0.21905400000002828,
+      "actual": "Rejected",
+      "expected": "Rejected"
+    },
+    {
+      "name": "Transactional undo / redo",
+      "passed": true,
+      "ms": 0.4494680000000244,
+      "actual": 70,
+      "expected": 70,
+      "tolerance": 0,
+      "error": 0
+    },
+    {
+      "name": "Deterministic sampling / merit",
+      "passed": true,
+      "ms": 8.919440000000009,
+      "actual": 136.76519718564492,
+      "expected": 136.76519718564492,
+      "tolerance": 0,
+      "error": 0
+    },
+    {
+      "name": "Bounded LM improves defocus",
+      "passed": true,
+      "ms": 28.90558199999998,
+      "actual": 70.62495929699627,
+      "expected": "< 1048.7994973620062",
+      "iterations": 3
+    }
+  ],
+  "passed": 28,
+  "total": 28,
+  "ms": 97.588979,
+  "backend": "CPU Float64",
+  "version": 1
+}

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11161d">
+  <meta name="description" content="Aether Optics — sequential optical design, real ray tracing, and WebGPU analysis in your browser.">
+  <title>Aether Optics · Optical Design Studio</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23111921'/%3E%3Cpath d='M9 29L20 9l11 20M14 22h12' fill='none' stroke='%237be4c5' stroke-width='2.4'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="application" id="app">
+    <header class="titlebar">
+      <a class="brand" href="#" data-action="about" aria-label="About Aether Optics"><span class="brand-mark"><svg viewBox="0 0 32 32"><path d="M5 25 16 6l11 19M10 19h13M4 12h11M19 12h9"/></svg></span><span>AETHER<span class="brand-sub">OPTICS</span></span></a>
+      <span class="title-divider"></span><span class="title-caption">Optical Design Studio</span>
+      <div class="quick-actions"><button class="icon-button" data-action="undo" title="Undo · Ctrl/⌘ Z" aria-label="Undo" data-icon="undo"></button><button class="icon-button" data-action="redo" title="Redo · Ctrl/⌘ Shift Z" aria-label="Redo" data-icon="redo"></button><button class="icon-button" data-action="save" title="Save project · Ctrl/⌘ S" aria-label="Save project" data-icon="save"></button></div>
+      <div class="title-spacer"></div>
+      <span class="local-badge"><span></span> LOCAL WORKSPACE</span>
+      <button class="icon-button" data-action="help" title="Documentation and keyboard shortcuts" aria-label="Help" data-icon="help"></button>
+    </header>
+    <nav class="ribbon-tabs" aria-label="Workspace ribbon">
+      <button data-action="file" class="file-tab">File</button>
+      <button data-tab="design" class="active">Lens Design</button>
+      <button data-tab="system">System Setup</button>
+      <button data-tab="analyze">Analyze</button>
+      <button data-tab="optimize">Optimize</button>
+      <button data-tab="view">View</button>
+      <div class="tab-fill"></div>
+      <button class="engine-badge" id="gpu-badge" data-action="engine"><span class="status-dot"></span><span id="gpu-label">Initializing engine</span></button>
+    </nav>
+    <div class="ribbon" id="ribbon">
+      <div class="ribbon-group" data-ribbon="design system">
+        <div class="ribbon-controls"><button class="ribbon-button" data-action="examples"><span data-icon="new"></span><span>New design</span></button><button class="ribbon-button" data-action="open"><span data-icon="folder"></span><span>Open</span></button><button class="ribbon-button" data-action="save"><span data-icon="save"></span><span>Save</span></button></div><span class="group-title">PROJECT</span>
+      </div>
+      <div class="ribbon-group" data-ribbon="design">
+        <div class="ribbon-controls"><button class="ribbon-button" data-action="add-lens"><span data-icon="lens"></span><span>Add lens</span></button><button class="ribbon-button" data-action="insert"><span data-icon="insert"></span><span>Surface</span></button><button class="ribbon-button" data-action="duplicate"><span data-icon="copy"></span><span>Duplicate</span></button><button class="ribbon-button" data-action="delete"><span data-icon="delete"></span><span>Delete</span></button></div><span class="group-title">PRESCRIPTION</span>
+      </div>
+      <div class="ribbon-group" data-ribbon="design system">
+        <div class="ribbon-controls"><button class="ribbon-button" data-action="asphere"><span data-icon="asphere"></span><span>Even asphere</span></button><button class="ribbon-button" data-action="mirror"><span data-icon="mirror"></span><span>Reflector</span></button><button class="ribbon-button" data-action="stop"><span data-icon="aperture"></span><span>Set stop</span></button></div><span class="group-title">SURFACE PROPERTIES</span>
+      </div>
+      <div class="ribbon-group" data-ribbon="design system analyze">
+        <div class="ribbon-controls"><button class="ribbon-button" data-action="wavelengths"><span data-icon="spectrum"></span><span>Wavelengths</span></button><button class="ribbon-button" data-action="fields"><span data-icon="field"></span><span>Fields</span></button><button class="ribbon-button" data-action="glass"><span data-icon="glass"></span><span>Materials</span></button></div><span class="group-title">SYSTEM DATA</span>
+      </div>
+      <div class="ribbon-group" data-ribbon="analyze view">
+        <div class="ribbon-controls"><button class="ribbon-button" data-action="analysis-spot"><span data-icon="spot"></span><span>Spot diagram</span></button><button class="ribbon-button" data-action="analysis-fans"><span data-icon="fans"></span><span>Ray fans</span></button><button class="ribbon-button" data-action="analysis-opd"><span data-icon="wave"></span><span>Wavefront</span></button><button class="ribbon-button" data-action="report"><span data-icon="report"></span><span>Ray report</span></button></div><span class="group-title">GEOMETRIC ANALYSIS</span>
+      </div>
+      <div class="ribbon-group" data-ribbon="optimize analyze">
+        <div class="ribbon-controls"><button class="ribbon-button" data-action="optimization"><span data-icon="optimize"></span><span>Merit function</span></button><button class="ribbon-button" data-action="sweep"><span data-icon="sweep"></span><span>Parameter sweep</span></button><button class="ribbon-button" data-action="benchmarks"><span data-icon="check"></span><span>Benchmarks</span></button></div><span class="group-title">DESIGN EXPLORATION</span>
+      </div>
+      <div class="ribbon-group" data-ribbon="view">
+        <div class="ribbon-controls"><button class="ribbon-button" data-action="2d"><span data-icon="layout"></span><span>2D layout</span></button><button class="ribbon-button" data-action="3d"><span data-icon="cube"></span><span>3D layout</span></button><button class="ribbon-button" data-action="fit"><span data-icon="fit"></span><span>Fit all</span></button><button class="ribbon-button" data-action="export-svg"><span data-icon="export"></span><span>Export layout</span></button></div><span class="group-title">VIEWPORT</span>
+      </div>
+      <div class="ribbon-group solve-group" data-ribbon="design system analyze optimize view">
+        <div class="ribbon-controls"><button class="ribbon-button" data-action="focus"><span data-icon="focus"></span><span>Quick focus</span></button><button class="ribbon-button primary-tool" data-action="trace"><span data-icon="play"></span><span>Trace rays</span></button></div><span class="group-title">SOLVE</span>
+      </div>
+    </div>
+    <div class="app-body">
+      <aside class="sidebar">
+        <div class="panel-heading">SYSTEM EXPLORER <button class="icon-button small" data-action="properties" title="System properties" aria-label="System properties" data-icon="settings"></button></div>
+        <div class="project-tree-header"><span data-icon="project"></span><div><strong id="tree-name">Optical system</strong><small>SEQUENTIAL · INFINITY CONJUGATE</small></div></div>
+        <div class="tree-section"><button class="tree-item tree-root" data-action="properties"><span data-icon="chevron"></span><span data-icon="settings"></span>System configuration</button><button class="tree-item child" data-action="wavelengths"><span data-icon="spectrum"></span>Wavelengths <em id="wave-count">3</em></button><button class="tree-item child" data-action="fields"><span data-icon="field"></span>Fields <em id="field-count">3</em></button><button class="tree-item child" data-action="glass"><span data-icon="glass"></span>Glass catalog</button></div>
+        <div class="tree-subhead"><span data-icon="chevron"></span>OPTICAL SURFACES <span id="surface-count">6</span></div>
+        <div id="surface-tree" class="surface-tree"></div>
+        <div class="tree-section analysis-tree"><button class="tree-item" data-action="optimization"><span data-icon="optimize"></span>Merit function <em id="variable-count">1 V</em></button><button class="tree-item" data-action="sweep"><span data-icon="sweep"></span>Parameter studies</button></div>
+        <div class="inspector-heading"><span>SELECTED SURFACE</span><span class="tiny-badge" id="selected-number">S1</span></div>
+        <div id="surface-inspector" class="surface-inspector"></div>
+        <div class="sidebar-bottom"><button data-action="diagnostics" class="validation-card"><span class="validation-icon" data-icon="check"></span><div><strong id="check-title">Prescription valid</strong><small id="check-note">Checking model…</small></div><span data-icon="arrow"></span></button></div>
+      </aside>
+      <main class="workspace">
+        <div class="document-header"><div><div class="breadcrumb">DESIGNS <span>/</span> SEQUENTIAL OPTICS</div><button id="document-name" class="document-name" data-action="properties">Aurora · air-spaced achromat</button></div><div class="document-actions"><span class="save-state" id="save-state">Local project</span><button class="button" data-action="export"><span data-icon="export"></span>Export results</button></div></div>
+        <section class="metrics" aria-label="Computed optical properties">
+          <div class="metric"><span class="metric-label">EFFECTIVE FOCAL LENGTH</span><div><strong id="metric-efl">—</strong><span>mm</span></div><small id="metric-efl-sub">Primary wavelength · paraxial</small></div>
+          <div class="metric"><span class="metric-label">WORKING APERTURE</span><div><strong id="metric-fno">—</strong></div><small id="metric-aperture">Entrance pupil — mm</small></div>
+          <div class="metric"><span class="metric-label">POLYCHROMATIC RMS</span><div><strong id="metric-rms">—</strong><span>µm</span></div><small>Field-weighted · centroid reference</small></div>
+          <div class="metric"><span class="metric-label">RAYS AT IMAGE</span><div><strong id="metric-rays">—</strong><span class="metric-subnumber" id="metric-total"></span></div><small id="metric-throughput">Geometric transmission</small></div>
+        </section>
+        <div class="work-grid">
+          <div class="design-column">
+            <section class="layout-panel panel">
+              <div class="panel-title"><div><span data-icon="layout"></span><strong>Optical layout</strong><span class="panel-subtitle">REAL RAY TRACE</span></div><div class="segmented" id="view-toggle"><button data-action="2d" class="active">2D</button><button data-action="3d">3D</button></div></div>
+              <div class="layout-toolbar"><label>Field <select id="layout-field" aria-label="Layout field"><option value="-1">All fields</option></select></label><label>λ <select id="layout-wave" aria-label="Layout wavelength"><option value="-1">All wavelengths</option></select></label><div class="toolbar-spacer"></div><button class="icon-button small active" data-action="toggle-rays" id="rays-toggle" title="Toggle rays" aria-label="Toggle rays" data-icon="ray"></button><button class="icon-button small active" data-action="toggle-grid" id="grid-toggle" title="Toggle grid" aria-label="Toggle grid" data-icon="grid"></button><button class="icon-button small" data-action="fit" title="Fit layout · F" aria-label="Fit layout" data-icon="fit"></button><button class="icon-button small" data-action="export-svg" title="Export computed layout as SVG" aria-label="Export SVG" data-icon="camera"></button></div>
+              <div class="viewport" id="viewport"><canvas id="layout-canvas" aria-label="Computed optical geometry and ray paths"></canvas><canvas id="layout-overlay" aria-label="Drag to pan or orbit; scroll to zoom"></canvas><div class="viewport-loading" id="viewport-loading"><span class="spinner"></span>Tracing optical system…</div></div>
+              <div class="layout-footer"><div id="wavelength-legend" class="legend"></div><span id="layout-help">Drag to pan · Scroll to zoom · F to fit</span></div>
+            </section>
+            <section class="lens-panel panel">
+              <div class="panel-title"><div><span data-icon="table"></span><strong>Lens Data Editor</strong><span class="panel-subtitle">LENGTHS IN mm</span></div><div><button class="icon-button small" data-action="insert" title="Insert surface" aria-label="Insert surface" data-icon="plus"></button><button class="icon-button small" data-action="duplicate" title="Duplicate selected surface" aria-label="Duplicate surface" data-icon="copy"></button><button class="icon-button small" data-action="delete" title="Delete selected surface" aria-label="Delete surface" data-icon="delete"></button></div></div>
+              <div class="lens-table-scroll"><table id="lens-table" class="lens-table"><thead><tr><th>Surf</th><th>Comment</th><th>Surface type</th><th>Radius <small>mm</small></th><th>Thickness <small>mm</small></th><th>Medium after</th><th>Semi-diam. <small>mm</small></th><th>Conic</th></tr></thead><tbody id="lens-tbody"></tbody></table></div>
+              <div class="editor-footer"><span><i class="variable-indicator"></i> V = optimization variable</span><span>0 / ∞ = plane <span class="separator">·</span> Double-click a value to edit</span></div>
+            </section>
+          </div>
+          <section class="analysis-panel panel">
+            <div class="panel-title"><div><span data-icon="spot"></span><strong>Analysis</strong><span class="live-badge"><span></span>LIVE</span></div><button class="icon-button small" data-action="report" title="Analysis report" aria-label="Analysis report" data-icon="report"></button></div>
+            <div class="analysis-tabs" role="tablist"><button data-analysis="spot" class="active" role="tab">Spot diagram</button><button data-analysis="fans" role="tab">Ray fans</button><button data-analysis="opd" role="tab">Wavefront</button></div>
+            <div class="analysis-settings"><label>Sampling <select id="sampling" aria-label="Pupil sampling"><option value="128">128 / pupil</option><option value="512" selected>512 / pupil</option><option value="2048">2,048 / pupil</option><option value="8192">8,192 / pupil</option></select></label><button class="icon-button small" data-action="analysis-settings" title="Analysis settings" aria-label="Analysis settings" data-icon="settings"></button></div>
+            <div id="analysis-content" class="analysis-content"><div class="empty-state">Computing optical analysis…</div></div>
+            <div class="analysis-footer"><span id="analysis-footnote">Equal-area pupil sampling · Geometric optics</span><span class="precision-pill" id="precision-pill">f64</span></div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <footer class="statusbar"><div><span class="status-dot" id="status-dot"></span><span id="status-message">Initializing optical kernel</span></div><div class="status-details"><span id="status-timing">—</span><span id="status-surfaces">6 surfaces</span><span>mm · µm · degrees</span><button data-action="engine" id="status-backend">REFERENCE ENGINE</button></div></footer>
+  </div>
+  <input id="file-input" type="file" accept=".json,.aether,application/json" hidden>
+  <dialog id="dialog"><div class="dialog-header"><div><span class="dialog-eyebrow">AETHER OPTICS</span><h2 id="dialog-title"></h2></div><button class="icon-button" id="dialog-close" aria-label="Close dialog" data-icon="close"></button></div><div id="dialog-content" class="dialog-content"></div><div id="dialog-actions" class="dialog-actions"></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
