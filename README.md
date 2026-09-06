@@ -105,7 +105,7 @@ src/charts.js            Spot, fan, OPD, convergence and sweep plots
 src/app.js               Editor, commands, dialogs, analysis synchronization
 src/benchmarks.js        28 reusable numerical/behavioral benchmarks
 /tests                   Node tests, worker-thread harness
-/tools                   Server, bundler, example export, browser integration
+/tools                   Server, bundler, example export, browser integration, Pages publisher
 /docs                    Numerical notes and test evidence
 /examples                Portable prescriptions
 /dist                    Self-contained browser build
@@ -136,9 +136,8 @@ Validate real engineering designs independently. Published analytic benchmarks d
 
 Original source: MIT, see [LICENSE](LICENSE). Manufacturer glass coefficients are attributed in [NUMERICS.md](docs/NUMERICS.md). No proprietary program code, manufacturer catalogs/PDF files, branded UI assets, bundled font files, or third-party runtime libraries are redistributed. Aether Optics is not affiliated with Ansys, Zemax, or SCHOTT.
 
-
 ## GitHub Pages
 
-The `.github/workflows/pages.yml` workflow runs the numerical/application tests, builds the self-contained application, and publishes `dist/` to GitHub Pages. Pull requests run the same tests and build without publishing. Deployment uses the `github-pages` environment and repository-scoped permissions.
+The `.github/workflows/pages.yml` workflow runs the numerical/application tests, builds the standalone application, and publishes the tested artifact to the generated `gh-pages` branch. GitHub's managed Pages workflow deploys that branch. Pull requests run the same tests and build without publishing. The publisher explicitly requests a Pages build and verifies that the public application's SHA-256 matches the tested artifact.
 
-The Pages publishing source must be enabled for this repository under **Settings → Pages → Build and deployment → Source → GitHub Actions**. No third-party hosting account, API key, or runtime dependency is required.
+Pages is enabled with **Settings → Pages → Build and deployment → Deploy from a branch → gh-pages → / (root)**. Keep this publishing source; the workflow does not require switching it to GitHub Actions or weakening the deployment environment's branch restrictions. No additional API key or third-party hosting account is needed. See [DEPLOYMENT.md](docs/DEPLOYMENT.md) for automation, permissions, and retry instructions.
