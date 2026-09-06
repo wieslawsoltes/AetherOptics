@@ -38,36 +38,40 @@ jobs:
           node --check dist/worker.bundle.js
           test -s dist/index.html
           touch dist/.nojekyll
-      - name: Upload GitHub Pages artifact
+      - name: Upload tested site artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v5
         with:
           path: dist
           include-hidden-files: true
 
-  deploy:
-    name: Deploy GitHub Pages
+  publish:
+    name: Publish and verify GitHub Pages
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
+      contents: write
       pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      actions: read
     steps:
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v6
-      - name: Deploy GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
-      - name: Verify published application
+      - name: Checkout publishing tools
+        uses: actions/checkout@v6
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Download tested site artifact
         env:
-          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          curl --fail --location --retry 6 --retry-all-errors --retry-delay 5 \
-            --connect-timeout 10 --max-time 60 "$SITE_URL" -o /tmp/aether-published.html
-          grep -q 'Aether Optics' /tmp/aether-published.html
-          printf '### Aether Optics\n\nPublished and verified: %s\n' "$SITE_URL" >> "$GITHUB_STEP_SUMMARY"
+          mkdir -p "$RUNNER_TEMP/pages-artifact" "$RUNNER_TEMP/pages-site"
+          gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" \
+            --name github-pages --dir "$RUNNER_TEMP/pages-artifact"
+          tar -xf "$RUNNER_TEMP/pages-artifact/artifact.tar" -C "$RUNNER_TEMP/pages-site"
+      - name: Publish generated branch and verify live bytes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node tools/publish-pages.mjs "$RUNNER_TEMP/pages-site"
